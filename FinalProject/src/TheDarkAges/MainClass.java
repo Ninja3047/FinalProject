@@ -1,5 +1,6 @@
 package TheDarkAges;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Random;
 
@@ -128,22 +129,48 @@ public class MainClass
 			int tempEat = 0;
 			
 			//buying food
-			do
+			try
 			{
 				System.out.print("Amount of food to buy: ");
 				tempFood = keyboard.nextInt();
-			} while(((tempFood * foodPrice) > gold) || (tempFood < 0));
+				if(((tempFood * foodPrice) > gold) || (tempFood < 0))
+				{
+					throw new InputMismatchException();
+				}
+			} catch(InputMismatchException ime)
+			{
+				System.err.println("Input not valid");
+			}
 			food = market.buyFood(tempFood, food);
 			gold = gold - tempFood * foodPrice;
 			System.out.println("You now have " + food + " foods. ");
 			System.out.println("You have " + gold + " golds left. ");
 			
 			//selling food
-			do
+			try
 			{
 				System.out.print("Amount of food to sell: ");
 				tempFood = keyboard.nextInt();
-			} while((tempFood > food) || (tempFood < 0));
+				if((tempFood > food) || (tempFood < 0))
+				{
+					throw new InputMismatchException();
+				}
+			} catch(InputMismatchException ime)
+			{
+				System.err.println("Input not valid");
+			}
+			try
+			{
+				System.out.print("Amount of food to sell: ");
+				tempFood = keyboard.nextInt();
+				if((tempFood > food) || (tempFood < 0))
+				{
+					throw new InputMismatchException();
+				}
+			} catch(InputMismatchException ime)
+			{
+				System.err.println("Input not valid");
+			}
 			gold = market.sellFood(tempFood * foodPrice, gold);
 			food = food - tempFood;
 			System.out.println("You now have " + gold + " golds. ");
@@ -155,42 +182,70 @@ public class MainClass
 			int tempLand = 0;
 			
 			//buying land
-			do
+			try
 			{
 				System.out.print("Amount of land to buy: ");
 				tempLand = keyboard.nextInt();
-			} while(((tempLand * landPrice) > gold) || (tempLand < 0));
+				if(((tempLand * landPrice) > gold) || (tempLand < 0))
+				{
+					throw new InputMismatchException();
+				}
+			} catch(InputMismatchException ime)
+			{
+				System.err.println("Input not valid");
+			}
 			land = market.buyLand(tempLand, land);
 			gold = gold - tempLand * landPrice;
 			System.out.println("You now have " + land + " lands.");
 			System.out.println("You have " + gold + " golds left. ");
 			
 			//selling land
-			do
+			try
 			{
 				System.out.print("Amount of land to sell: ");
 				tempLand = keyboard.nextInt();
-			} while((tempLand > land) || (tempLand < 0));
+				if((tempLand > land) || (tempLand < 0))
+				{
+					throw new InputMismatchException();
+				}
+			} catch(InputMismatchException ime)
+			{
+				System.err.println("Input not valid");
+			}
 			gold = market.sellFood(tempLand * landPrice, gold);
 			land = land - tempLand;
 			System.out.println("You now have " + gold + " golds.");
 			System.out.println("You have " + land + " lands left. ");
 			
 			//planting seeds for next year
-			do
+			try
 			{
 				System.out.print("Acres to plant: ");
 				tempLand = keyboard.nextInt();
-			} while((tempLand > land) || ((tempLand / 10) > food || (tempLand < 0)));
+				if((tempLand > land) || ((tempLand / 10) > food || (tempLand < 0)))
+				{
+					throw new InputMismatchException();
+				}
+			} catch(InputMismatchException ime)
+			{
+				System.err.println("Input not valid");
+			}
 			food = food - tempLand / 10;
 			System.out.println("You used " + (tempLand / 10) + " foods to plant " + tempLand + " acres");			
 			
 			//feeding people
-			do
+			try
 			{
 				System.out.print("How much food do you want to feed your people? ");
 				tempEat = keyboard.nextInt();
-			} while(tempEat > food);
+				if(tempEat > food)
+				{
+					throw new InputMismatchException();
+				}
+			} catch(InputMismatchException ime)
+			{
+				System.err.println("Input not valid");
+			}
 			food = food - tempEat; //people eating food per year
 			System.out.println("You feed " + tempEat + " to your people. ");
 			System.out.println("You have " + food + " foods left. ");
